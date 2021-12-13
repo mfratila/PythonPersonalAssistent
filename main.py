@@ -16,25 +16,24 @@ BOTNAME = config('BOTNAME')
 # initialize the text to speech class, uses sapi5 from Microsoft
 engine = pyttsx3.init('sapi5')
 
-# Set Rate
+# Set the rate of AI speaking
 engine.setProperty('rate', 190)
 
-# Set volume
+# Set the volume of the AI
 engine.setProperty('volume', 1.0)
 
-# Set Voice (Male)
+# Set the Voice (Male)
 voices = engine.getProperty('voices')
 engine.setProperty('voice', voices[0].id)
 
-# TTS Conversion
+# TTS Conversion, Used to speak whatever text is passed to it
 def speak(text):
-    """ Used to speak whatever text is passed to it"""
 
     engine.say(text)
     engine.runAndWait()
 
+ # Greets the user according to time   
 def greet_user():
-    """Greets the user according to time"""
 
     hour = datetime.now().hour
     if ( hour >= 5 ) and ( hour <= 12):
@@ -45,8 +44,8 @@ def greet_user():
         speak(f"Good Evening {USERNAME}")
     speak(f"I am {BOTNAME}. How may I assist you?")
 
+ # Takes user input, recognizes it using Speech Recognition module and converts it into text   
 def take_user_input():
-    """Takes user input, recognizes it using Speech Recognition module and converts it into text"""
 
     r = sr.Recognizer()
     with sr.Microphone() as source:
@@ -110,7 +109,7 @@ if __name__ == '__main__':
             video = take_user_input().lower()
             play_on_youtube(video)
 
-        elif 'search on google' in query:
+        elif 'search on google' in query or 'search something on google' in query:
             speak('What do you want to search on Google, sir?')
             query = take_user_input().lower()
             search_on_google(query)
